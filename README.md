@@ -1,4 +1,4 @@
-# Express Handlebars Template
+# Express with Handlebars Template
 
 A template for creating web backends using Express. Uses Handlebars as the render engine.
 
