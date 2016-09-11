@@ -5,7 +5,7 @@ var router = express.Router();
 
 router.get('/', function(req, res, next) {
 	console.log(__dirname)
- 	res.render('static', { title: 'Live' , layout:false});
+ 	res.render('live', {layout:false});
 });
 
 module.exports = router;

@@ -8,7 +8,6 @@ var urlEncoded = bodyParser.urlencoded({ extended: true });
 /* GET home page. */
 
 router.get('/', function(req, res, next) {
-	console.log(__dirname)
  	res.render('index', { title: 'Demo' , layout:false});
 });
 
