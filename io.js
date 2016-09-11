@@ -6,14 +6,13 @@ exports.open = function (io) {
 
 		
 		socket.on('temp', function (data) {
-			console.log('receiving ' + data.datetime + ' ' + data.temp);
+			console.log('receiving ' + data.date + ' ' + data.temperature);
 
 			// Send to all connected browsers
-			socket.broadcast.emit('data', data)
+			socket.broadcast.emit('temp', data)
 
 			// Add to database
-			
-			tempModel.insert(data.temp, data.datetime, function (err, result) {
+			tempModel.insert(data.temperature, data.date, function (err, result) {
 				if(err) {
 					console.log('Error writing to database');
 					console.log(err);
@@ -22,22 +21,6 @@ exports.open = function (io) {
 			});
 
 		});
-
-		// // Trigger for temperature data
-		// socket.on('temp', function (data) {
-		// 	console.log('receiving temp: ' + data);
-
-		// 	// Send to all connected browsers
-		// 	socket.broadcast.emit('data', data)
-
-		// 	// Add to database
-		// 	tempModel.insert(data.temp, data.datetime, function (err) {
-		// 		if(err) {
-		// 			console.log('Error writing to database')
-		// 			console.log(err)
-		// 		}
-		// 	});
-		// });
 
 	})
 }

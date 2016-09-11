@@ -193,3 +193,6 @@ body > .overflow-wrapper > header > nav.menu-right > a.item:hover {
   color: #141414;
   text-decoration: underline;
 }
+circle.point {
+  fill: none;
+}

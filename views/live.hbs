@@ -4,55 +4,91 @@
 	<meta charset="utf-8">
     <meta http-equiv="Content-type">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
+    <link rel="stylesheet" type="text/css" href="/node_modules/line-chart/dist/css/line-chart.css">
     <link rel="stylesheet" type="text/css" href="/css/app.css">
+    <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script type="text/javascript" src="/node_modules/socket.io-client/socket.io.js"></script>
     <script type="text/javascript" src="/node_modules/line-chart/dist/line-chart.js"></script>
 	<title>Live</title>
 	<script type="text/javascript">
-		document.addEventListener('DOMContentLoaded', function () {
-		 	
-		 	var socket = io();
+
+		$(document).ready(function () {
+			
+			var socket = io();
 			socket.on('connect', function () {
 				console.log('connected to server websocket')
 			})
-			socket.on('data', function (data) {
-				console.log(data)
+			socket.on('temp', function (realtime_data) {
+				console.log(realtime_data)
+
+				if (fixed) {
+					data.shift();
+				} 
+
+				data.push({
+					x: new Date(realtime_data.date),
+					y: realtime_data.temperature
+				});
+
+				if(default_chart_loaded) {
+					linechart.data([data])
+					.update()
+				}
 			})
 
-
-			/**
-			 * Draw chart
-			*/
-
+			/*----------------------------------------------------------------------------------
+			* Load default chart
+			**---------------------------------------------------------------------------------*/
+			
+			// Select chart host element
 			var selection = d3.select("div.chart")
+			var data;
+			var fixed = false;
+			var linechart;
+			var default_chart_loaded = false;
 
-			// Setting up data series
-			var data1 = [3,4,5.5,4,8,3,4.5,5,7,2].map(function (y, i) {
-			  return {x: i, y: y};
+			// Data is stored at GMT on server
+			// When conerted back to Date object using new Date() in browser it will be correct.
+			// Always Send ISO8601 to server!
+
+			// Default to get data from an hour ago till now
+			var date_now = new Date();
+			var date_old = new Date()
+			date_old.setMinutes(date_now.getMinutes()-10);
+
+			// Set data URL
+			var url = '/temp/datetime?start=' + date_old.toISOString() + '&end=' + date_now.toISOString();
+
+			// Get data for default chart
+			$.getJSON(url, function (default_data) {
+				// Convert date values in date objects
+				// Map value to x and y
+				data = default_data.rows.map(function (value) {
+					return {
+						x: new Date(value.date),
+						y: value.temperature
+					}
+				})
+
+				// Render default chart
+				linechart = lineChart.chart(selection, 'temp-chart')
+					.ratio(4,2)
+					.data([data])
+					.scaleX('time')
+					.xLabel('Time (s)')
+					.axisBuffer({y:1})
+					.yLabel('Temperature (degrees C)')
+					.title('Temperature vs Time')
+					.grid(true)
+					.render()
+
+				default_chart_loaded = true;
 			});
 
-			var data2 = [4,5,6.7,3,7,4,5.5,6,3,3].map(function (y, i) {
-			  return {x: i, y: y};
-			})
+		});
 
-			var data3 = [3,3,6.5,2,8,3,3.5,6,7,3].map(function (y, i) {
-			  return {x: i, y: y};
-			});
-
-			// How to use lineChart
-			var linechart = lineChart.chart(selection, 'my-chart')
-				.ratio(4,2)
-				.data([data1, data2, data3])
-				.xLabel('Time (s)')
-				.yLabel('Temperature (degrees C)')
-				.title('Temperature vs Time')
-				.grid(true)
-				.render()
-			
-			
-			
-		})	
 	</script>
 </head>
 <body>

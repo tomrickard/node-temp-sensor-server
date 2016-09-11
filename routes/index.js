@@ -6,8 +6,7 @@ var jsonParser = bodyParser.json();
 /* GET home page. */
 
 router.get('/', function(req, res, next) {
-	console.log(__dirname)
- 	res.render('index', { title: 'Demo' , layout:false});
+	res.redirect('/static');
 });
 
 module.exports = router;

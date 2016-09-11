@@ -14,8 +14,22 @@ exports.getAll = function(done) {
   })
 }
 
-exports.getInbetween = function(datetime_start, datetime_end , done) {
-  db.get().query('SELECT * FROM temperature WHERE datetime = ?', userId, function (err, rows) {
+exports.tempInBetween = function(datetime_start, datetime_end , done) {
+  db.get().query('SELECT * FROM temperature WHERE date > ? AND date < ?', [datetime_start, datetime_end], function (err, rows) {
+    if (err) return done(err)
+    done(null, rows)
+  })
+}
+
+exports.tempThresholdAbove = function(datetime_start, datetime_end , done) {
+  db.get().query('SELECT * FROM temperature WHERE temperature > ?', [temperature], function (err, rows) {
+    if (err) return done(err)
+    done(null, rows)
+  })
+}
+
+exports.tempThresholdBelow = function(temperature, done) {
+  db.get().query('SELECT * FROM temperature WHERE temperature < ?', [temperature], function (err, rows) {
     if (err) return done(err)
     done(null, rows)
   })
