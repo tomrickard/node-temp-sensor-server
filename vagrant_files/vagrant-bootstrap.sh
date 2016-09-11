@@ -104,4 +104,4 @@ php5enmod mcrypt
 service apache2 restart
 
 # Setup demo database
-bash /vagrant/vagrant_files/setup_sensor_database.sh
+# bash /vagrant/vagrant_files/setup_sensor_database.sh
