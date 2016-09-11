@@ -1,16 +1,21 @@
 var express = require('express');
 var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var jsonParser = bodyParser.json();
 
 var routes = require('./routes/index');
-var users = require('./routes/users');
+var temp = require('./routes/temp');
+var live = require('./routes/live');
+var static = require('./routes/static');
+
+var db = require('./mysql-db')
 
 var app = express();
 
-// handlebars engine
+/*--------------------------------------------
+ * Template Engine - Handlebars
+ *--------------------------------------------
+*/
 var hbs = require('hbs');
 // hbs.registerHelper('helper_name', function(...) { ... });
 hbs.registerPartials(__dirname + '/views/partials');
@@ -18,18 +23,36 @@ hbs.registerPartials(__dirname + '/views/partials');
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(require('stylus').middleware(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, 'public')));
+/*--------------------------------------------
+ * Routes
+ *--------------------------------------------
+*/
+
+// Static
+app.use('/', express.static(path.join(__dirname, 'public')));
 app.use('/node_modules', express.static(path.join(__dirname, 'node_modules')));
 
+// Dynamic
 app.use('/', routes);
-app.use('/users', users);
+app.use('/temp', temp);
+app.use('/live', live);
+app.use('/static', static);
+
+/*--------------------------------------------
+ * Connect to MySQL Database
+ *--------------------------------------------
+*/
+
+db.connect(function (err) {
+  if(err) {
+    console.log('Cannot connect to database');
+  }
+})
+
+/*--------------------------------------------
+ * Error Handling
+ *--------------------------------------------
+*/
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -37,8 +60,6 @@ app.use(function(req, res, next) {
   err.status = 404;
   next(err);
 });
-
-// error handlers
 
 // development error handler
 // will print stacktrace

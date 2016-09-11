@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta http-equiv="Content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="/css/app.css">
+    <link rel="stylesheet" type="text/css" href="/node_modules/line-chart/dist/css/line-chart.css">
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script type="text/javascript" src="/node_modules/line-chart/dist/line-chart.js"></script>
+	<title>Static</title>
+	<script type="text/javascript">
+		document.addEventListener('DOMContentLoaded', function () {
+
+
+			/**
+			 * Draw chart
+			*/
+
+			var selection = d3.select("div.chart")
+
+			// Setting up data series
+			var data1 = [3,4,5.5,4,8,3,4.5,5,7,2].map(function (y, i) {
+			  return {x: i, y: y};
+			});
+
+			var data2 = [4,5,6.7,3,7,4,5.5,6,3,3].map(function (y, i) {
+			  return {x: i, y: y};
+			})
+
+			var data3 = [3,3,6.5,2,8,3,3.5,6,7,3].map(function (y, i) {
+			  return {x: i, y: y};
+			});
+
+			// How to use lineChart
+			var linechart = lineChart.chart(selection, 'temp-chart')
+				.ratio(4,2)
+				.data([data1, data2, data3])
+				.xLabel('Time (s)')
+				.yLabel('Temperature (degrees C)')
+				.title('Temperature vs Time')
+				.grid(true)
+				.render()
+			
+		})	
+	</script>
+</head>
+<body>
+	<div class="overflow-wrapper">
+		<header>
+		    <div class="logo">
+				<a href="/index.html">Demo</a>
+			</div>
+			<nav class="menu-right">
+				<a class="item" href="/index.html">LIVE</a>
+				<a class="item" href="/collections.html">STATIC</a>
+			</nav>
+		</header>
+	</div>
+
+	<div class="chart"></div>
+
+</body>
+</html>
