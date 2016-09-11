@@ -8,8 +8,9 @@ exports.connect = function (done) {
 	  host: 'localhost',
 	  user: 'root',
 	  password: 'test',
-	  database: 'temperature'
+	  database: 'sensors'
 	});
+	done();
 }
 
 exports.get = function () {

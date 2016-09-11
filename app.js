@@ -44,9 +44,7 @@ app.use('/static', static);
 */
 
 db.connect(function (err) {
-  if(err) {
-    console.log('Cannot connect to database');
-  }
+  console.log('MySQL Connected');
 })
 
 /*--------------------------------------------
