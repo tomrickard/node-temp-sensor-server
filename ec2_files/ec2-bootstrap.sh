@@ -70,17 +70,6 @@ echo "<Directory /usr/share/phpmyadmin>
 # Restart Apache
 service apache2 restart
 
-# Create softlinks for codeiniter and simple_api.php
-# rm /var/www/html/index.php
-# ln -s /vagrant/CodeIgniter-3.1.0/index.php /var/www/html/index.php
-# ln -s /vagrant/simple_api.php /var/www/html/simple_api.php
-
-# # CSS, JS, image soflink
-# ln -s /vagrant/CodeIgniter-3.1.0/application/css /var/www/html/css
-# ln -s /vagrant/CodeIgniter-3.1.0/application/js /var/www/html/js
-# ln -s /vagrant/CodeIgniter-3.1.0/application/images /var/www/html/images
-
-#!/bin/bash
 # installs NodeJS (which includes NPM) on Ubuntu 32/64 bit and Raspberry Pi arm6/arm7
 
 # Move to download folder
@@ -104,4 +93,4 @@ php5enmod mcrypt
 service apache2 restart
 
 # Setup demo database
-bash /vagrant/vagrant_files/setup_sensor_database.sh
+# bash /vagrant/vagrant_files/setup_sensor_database.sh
