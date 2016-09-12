@@ -1,8 +1,9 @@
 var tempModel = require('./models/temp-model');
 
 exports.open = function (io) {
+	// On websocket connection
 	io.on('connection', function (socket) {
-		console.log('relay connected')
+		console.log('client connected')
 
 		
 		socket.on('temp', function (data) {

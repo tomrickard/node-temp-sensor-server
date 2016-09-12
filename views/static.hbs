@@ -4,13 +4,12 @@
 	<meta charset="utf-8">
     <meta http-equiv="Content-type">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
     <link rel="stylesheet" type="text/css" href="/node_modules/line-chart/dist/css/line-chart.css">
     <link rel="stylesheet" type="text/css" href="/css/app.css">
     <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
-    <script type="text/javascript" src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script type="text/javascript" src="/node_modules/line-chart/dist/line-chart.js"></script>
+    <script type="text/javascript" src="/node_modules/datetime-picker/dist/datetime-picker.js"></script>
 	<title>Static</title>
 	<script type="text/javascript">
 
@@ -67,21 +66,51 @@
 			// Always Send ISO8601 to server!
 
 			// Default to get data from an hour ago till now
-			var date_now = new Date();
-			var date_old = new Date()
-			date_old.setHours(date_now.getHours()-10);
+			var start_date = new Date();
+			var end_date = new Date()
+			start_date.setHours(end_date.getHours()-10);
 
 			// Set data URL
-			var url = '/temp/datetime?start=' + date_old.toISOString() + '&end=' + date_now.toISOString();
+			var url = '/temp/datetime?start=' + start_date.toISOString() + '&end=' + end_date.toISOString();
 			newChart(url);
 			
 			/*----------------------------------------------------------------------------------
-			* User defined chart
+			* Update chart using datetime picker
 			**---------------------------------------------------------------------------------*/
 			
-		$(function() {
-			$( "#datepicker" ).datepicker();
-		});
+			
+			var start_selection = d3.select("#startDate");
+		 	var end_selection = d3.select("#endDate");
+		 	var default_date = new Date().toISOString();
+
+		 	var print_events = document.getElementById('events')
+
+		 	// Create a datetime-picker in start_selection div
+		 	// Updates will fire 'start_date' event
+		 	dateTimePicker.pick(start_selection, start_date, 'start_date');
+
+		 	// Create a datetime-picker in start_selection div
+		 	// Updates will fire 'start_date' event
+		 	dateTimePicker.pick(end_selection, end_date, 'end_date');
+
+		 	// Listen for datetime updates
+		 	document.addEventListener('start_date', function(e) {
+			  console.log('start date: ' + e.detail);
+
+			  // Update chart with new start date
+			  start_date = new Date(e.detail);
+			  url = '/temp/datetime?start=' + start_date.toISOString() + '&end=' + end_date.toISOString();
+			  newChart(url);
+			});
+
+			document.addEventListener('end_date', function(e) {
+			  console.log('end date: ' + e.detail);
+
+			// Update chart with new end date
+			end_date = new Date(e.detail);
+			url = '/temp/datetime?start=' + start_date.toISOString() + '&end=' + end_date.toISOString();
+			newChart(url);
+			});
 
 
 		});
@@ -94,7 +123,7 @@
 	</div>
 
 	<div class="chart"></div>
-	<p>Start: <input type="text" id="start_date" value="today" placeholder="Today"></p>
-	<p>End: <input type="text" id="start_date"></p>
+	<div id="startDate" style="width: 400px;"></div>
+	<div id="endDate" style="width: 400px;"></div>
 </body>
 </html>
