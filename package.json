@@ -19,7 +19,7 @@
     "debug": "~2.2.0",
     "express": "~4.13.4",
     "hbs": "~4.0.0",
-    "line-chart": "git@github.com:tomrickard/line-chart.git#v0.2.1",
+    "line-chart": "git@github.com:tomrickard/line-chart.git#v0.3.0",
     "morgan": "~1.7.0",
     "mysql": "^2.11.1",
     "serve-favicon": "~2.3.0",
