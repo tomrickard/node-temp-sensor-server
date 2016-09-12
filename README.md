@@ -40,15 +40,15 @@ npm run stylus-w
 
 The static page display data from the sensor. It defaults to the last ten hours. The start and end datetimes can be adjusted using the toggles.
 
-![Static Chart](/mardown_images/static.png)
+![Static Chart](/markdown_images/static.png)
 
 ## Live page
 
 The live page displays real-time data. It defaults to the last hour + live updates. The start date-time can be adjusted using the toggles. The data series size can accumulate points or stay fixed. When fixed the start point moves every time a new point arrives.
 
-![Static Chart](/mardown_images/static.png)
+![Live Chart](/markdown_images/live.png)
 
-# Vagrant
+## Vagrant
 
 The Vagrant file can be used to provision a LAMP stack on Ubuntu 14.04 (Trusty Tahr). If you have Vagrant just run:
 
@@ -58,6 +58,10 @@ vagrant up
 
 Vagrant should automatically provision the machine using the *vagrant-bootstrap.sh* file. PhpMyAdmin is installed along side the LAMP stack. Usernames and passwords are set in the *mysql_install.conf* file.
 
-# License
+## MySQL
+
+Must have a MySQL database provisioned to work. In the *vagrant_files* directory there is a helper script *setup_sensor_database.sh* that created the *sensor* database and *temperature* table.
+
+## License
 
 MIT
