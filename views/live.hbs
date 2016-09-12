@@ -79,6 +79,8 @@
 					// Add chart with new data
 					makeChart(selection, new_data)
 
+					default_chart_loaded = true;
+
 				});
 			}
 
@@ -86,6 +88,10 @@
 			* Load default chart
 			**---------------------------------------------------------------------------------*/
 			
+			// Live load settings
+			var fixed = true;
+			var default_chart_loaded = false;
+
 			// Select chart host element
 			var selection = d3.select("div.chart")
 			var linechart;
@@ -118,6 +124,7 @@
 
 		 	// Listen for datetime updates
 		 	document.addEventListener('start_date', function(e) {
+		 	  default_chart_loaded = false;
 			  console.log('start date: ' + e.detail);
 
 			  // Update chart with new start date
