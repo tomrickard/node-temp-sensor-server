@@ -24,8 +24,7 @@
 				console.log(realtime_data)
 
 				// Check to see if data is correct
-				var toString = Object.prototype.toString;
-				if (toString(realtime_data.temperature) === 'Number' && toString(realtime_data.date) === '[object Date]') {
+				if (typeof realtime_data.temperature === 'string' && typeof realtime_data.date === 'string') {
 
 					if (fixed) {
 						data.shift();
