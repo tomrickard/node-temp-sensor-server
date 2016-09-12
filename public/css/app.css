@@ -136,7 +136,6 @@ body {
   width: 100%;
   min-height: 100%;
   font-size: 62.5%;
-  overflow: hidden;
 }
 button::-moz-focus-inner {
   padding: 0;
@@ -155,9 +154,6 @@ select::-moz-focus-inner {
   overflow: hidden;
   color: #5a5a5a;
   min-height: 100%;
-}
-.body-wrapper {
-  overflow: hidden;
 }
 body > .overflow-wrapper > header {
   overflow: hidden;
