@@ -32,8 +32,9 @@
 
 					data.push({
 						x: new Date(realtime_data.date),
-						y: realtime_data.temperature
+						y: parseInt(realtime_data.temperature)
 					});
+					console.log(data)
 
 					if(default_chart_loaded) {
 						linechart.data([data])
@@ -72,7 +73,7 @@
 				data = default_data.rows.map(function (value) {
 					return {
 						x: new Date(value.date),
-						y: value.temperature
+						y: parseInt(value.temperature)
 					}
 				})
 
