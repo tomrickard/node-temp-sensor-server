@@ -23,18 +23,23 @@
 			socket.on('temp', function (realtime_data) {
 				console.log(realtime_data)
 
-				if (fixed) {
-					data.shift();
-				} 
+				// Check to see if data is correct
+				var toString = Object.prototype.toString;
+				if (toString(realtime_data.temperature) === 'Number' && toString(realtime_data.date) === '[object Date]') {
 
-				data.push({
-					x: new Date(realtime_data.date),
-					y: realtime_data.temperature
-				});
+					if (fixed) {
+						data.shift();
+					} 
 
-				if(default_chart_loaded) {
-					linechart.data([data])
-					.update()
+					data.push({
+						x: new Date(realtime_data.date),
+						y: realtime_data.temperature
+					});
+
+					if(default_chart_loaded) {
+						linechart.data([data])
+						.update()
+					}
 				}
 			})
 
