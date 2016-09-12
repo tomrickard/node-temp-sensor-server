@@ -1,6 +1,6 @@
 # Temperature Sensor Server
 
-Accepts temprature sensor data from the temperature sensor relay via websockets or POST requests. Stores data in a MySQL database. Provides a web interface to view the data in either realtime or static formats. Uses:
+A remote sensing demo. The server accepts sensor data from a temperature sensor relay. Data is transmitted via websockets and stored in a MySQL database. The server provides a web interface to view the data in either real-time or static formats. Uses:
 
 - Express
 - Handlebars
