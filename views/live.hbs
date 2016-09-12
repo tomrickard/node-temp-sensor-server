@@ -10,6 +10,7 @@
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script type="text/javascript" src="/node_modules/socket.io-client/socket.io.js"></script>
     <script type="text/javascript" src="/node_modules/line-chart/dist/line-chart.js"></script>
+    <script type="text/javascript" src="/node_modules/datetime-picker/dist/datetime-picker.js"></script>
 	<title>Live</title>
 	<script type="text/javascript">
 
@@ -43,53 +44,90 @@
 			})
 
 			/*----------------------------------------------------------------------------------
+			* Chart making functions
+			**---------------------------------------------------------------------------------*/
+
+			// Draw a chart
+			function makeChart(selection, data) {
+				linechart = lineChart.chart(selection, 'temp-chart')
+					.ratio(4,2)
+					.data([data])
+					.scaleX('time')
+					.xLabel('Time (s)')
+					.axisPadding({y:1})
+					.yLabel('Temperature (°C)')
+					.title('Temperature vs Time')
+					.grid(true)
+					.render()
+			}
+
+			function newChart(url) {
+				// Get data with Ajax call
+				$.getJSON(url, function (data) {
+
+					// Convert date values in date objects
+					// Map value to x and y
+					var new_data = data.rows.map(function (value) {
+						return {
+							x: new Date(value.date),
+							y: value.temperature
+						}
+					})
+
+					// Remove old chart
+					selection.selectAll('*').remove()
+					// Add chart with new data
+					makeChart(selection, new_data)
+
+				});
+			}
+
+			/*----------------------------------------------------------------------------------
 			* Load default chart
 			**---------------------------------------------------------------------------------*/
 			
 			// Select chart host element
 			var selection = d3.select("div.chart")
-			var data;
-			var fixed = false;
 			var linechart;
-			var default_chart_loaded = false;
 
 			// Data is stored at GMT on server
 			// When conerted back to Date object using new Date() in browser it will be correct.
 			// Always Send ISO8601 to server!
 
 			// Default to get data from an hour ago till now
-			var date_now = new Date();
-			var date_old = new Date()
-			date_old.setMinutes(date_now.getMinutes()-10);
+			var start_date = new Date();
+			var end_date = new Date()
+			start_date.setHours(end_date.getHours()-10);
 
 			// Set data URL
-			var url = '/temp/datetime?start=' + date_old.toISOString() + '&end=' + date_now.toISOString();
+			var url = '/temp/datetime?start=' + start_date.toISOString() + '&end=' + end_date.toISOString();
+			newChart(url);
+			
+			/*----------------------------------------------------------------------------------
+			* Update chart using datetime picker (only for start datetime)
+			**---------------------------------------------------------------------------------*/
+			
+			
+			var start_selection = d3.select("#startDate");
 
-			// Get data for default chart
-			$.getJSON(url, function (default_data) {
-				// Convert date values in date objects
-				// Map value to x and y
-				data = default_data.rows.map(function (value) {
-					return {
-						x: new Date(value.date),
-						y: parseInt(value.temperature)
-					}
-				})
+		 	var print_events = document.getElementById('events')
 
-				// Render default chart
-				linechart = lineChart.chart(selection, 'temp-chart')
-					.ratio(4,2)
-					.data([data])
-					.scaleX('time')
-					.xLabel('Time')
-					.axisPadding({y:1})
-					.yLabel('Temperature (degrees C)')
-					.title('Temperature vs Time')
-					.grid(true)
-					.render()
+		 	// Create a datetime-picker in start_selection div
+		 	// Updates will fire 'start_date' event
+		 	dateTimePicker.pick(start_selection, start_date, 'start_date');
 
-				default_chart_loaded = true;
+		 	// Listen for datetime updates
+		 	document.addEventListener('start_date', function(e) {
+			  console.log('start date: ' + e.detail);
+
+			  // Update chart with new start date
+			  start_date = new Date(e.detail);
+			  end_date = new Date();
+			  url = '/temp/datetime?start=' + start_date.toISOString() + '&end=' + end_date.toISOString();
+			  newChart(url);
 			});
+
+
 
 		});
 
@@ -100,6 +138,18 @@
 		{{> nav}}
 	</div>
 
-	<div class="chart"></div>
+	<div class="body-wrapper">
+
+		<div class="chart" id="staticChart">
+		</div>
+
+		<div id="dates">
+			<div id="startText">
+				Start
+			</div>
+			<div id="startDate"></div>
+		</div>
+
+	</div>
 </body>
 </html>

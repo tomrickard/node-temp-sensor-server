@@ -136,6 +136,7 @@ body {
   width: 100%;
   min-height: 100%;
   font-size: 62.5%;
+  overflow: hidden;
 }
 button::-moz-focus-inner {
   padding: 0;
@@ -149,11 +150,14 @@ select::-moz-focus-inner {
   margin-top: -2px;
   margin-bottom: -2px;
 }
-.wrapper {
+.overflow-wrapper {
   display: block;
   overflow: hidden;
   color: #5a5a5a;
   min-height: 100%;
+}
+.body-wrapper {
+  overflow: hidden;
 }
 body > .overflow-wrapper > header {
   overflow: hidden;
@@ -194,4 +198,27 @@ body > .overflow-wrapper > header > nav.menu-right > a.item:hover {
 }
 circle.point {
   fill: none;
+}
+div#dates {
+  overflow: hidden;
+  left: 0;
+  top: 10px;
+  width: 100%;
+}
+div#dates > div#startText {
+  float: left;
+}
+div#dates > div#startDate {
+  float: left;
+  width: 20%;
+}
+div#dates > div#endDate {
+  float: right;
+  width: 20%;
+}
+div#dates > div#endText {
+  float: right;
+}
+defs > path#arrow {
+  fill: #dcdcdc;
 }

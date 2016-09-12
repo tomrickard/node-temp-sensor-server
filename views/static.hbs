@@ -27,7 +27,7 @@
 					.scaleX('time')
 					.xLabel('Time (s)')
 					.axisPadding({y:1})
-					.yLabel('Temperature (degrees C)')
+					.yLabel('Temperature (°C)')
 					.title('Temperature vs Time')
 					.grid(true)
 					.render()
@@ -81,7 +81,6 @@
 			
 			var start_selection = d3.select("#startDate");
 		 	var end_selection = d3.select("#endDate");
-		 	var default_date = new Date().toISOString();
 
 		 	var print_events = document.getElementById('events')
 
@@ -120,10 +119,25 @@
 <body>
 	<div class="overflow-wrapper">
 		{{> nav}}
-	</div>
+	
+		<div class="body-wrapper">
 
-	<div class="chart"></div>
-	<div id="startDate" style="width: 400px;"></div>
-	<div id="endDate" style="width: 400px;"></div>
+			<div class="chart" id="staticChart">
+			</div>
+
+			<div id="dates">
+				<div id="startText">
+					Start
+				</div>
+				<div id="startDate"></div>
+				<div id="endDate"></div>
+				<div id="endText">
+					End
+				</div>
+			</div>
+
+		</div>
+		
+	</div>
 </body>
 </html>
