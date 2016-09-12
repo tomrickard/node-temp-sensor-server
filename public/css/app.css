@@ -195,26 +195,83 @@ body > .overflow-wrapper > header > nav.menu-right > a.item:hover {
 circle.point {
   fill: none;
 }
+.chart {
+  background: transparent;
+}
+.chart > svg {
+  background: transparent;
+}
 div#dates {
   overflow: hidden;
   left: 0;
   top: 10px;
   width: 100%;
+  margin-top: -40px;
 }
-div#dates > div#startText {
+div#dates > div#startDateContainer {
   float: left;
+  margin-left: 5%;
+  width: 25%;
 }
-div#dates > div#startDate {
-  float: left;
-  width: 20%;
+div#dates > div#startDateContainer > div#startDate {
+  width: 100%;
+  background: #fafafa;
+  border: 1px solid #f0f0f0;
+  padding: 10px 5px 5px 10px;
 }
-div#dates > div#endDate {
+div#dates > div#endDateContainer {
   float: right;
-  width: 20%;
+  margin-right: 5%;
+  width: 25%;
 }
-div#dates > div#endText {
+div#dates > div#endDateContainer > div#endDate {
+  width: 100%;
+  background: #fafafa;
+  border: 1px solid #f0f0f0;
+  padding: 10px 5px 5px 10px;
+}
+div#dates > div#fixedCheckboxContainer {
   float: right;
+  margin-right: 5%;
+  width: 25%;
 }
-defs > path#arrow {
-  fill: #dcdcdc;
+div#dates > div#fixedCheckboxContainer > div#fixedCheckbox {
+  margin: 10px auto 0 auto;
+  background: #fff;
+  width: 50px;
+  height: 50px;
+  background: #f0f0f0;
+  border: 1px solid #e6e6e6;
+  padding: 10px;
+}
+div#dates > div#fixedCheckboxContainer > div#fixedCheckbox:hover {
+  cursor: pointer;
+}
+div#dates > div#fixedCheckboxContainer > div#fixedCheckbox > img#fixedTick {
+  width: 30px;
+}
+div#dates .title {
+  font-size: 20px;
+  color: #505050;
+  font-family: sans-serif;
+  text-align: center;
+  padding: 10px 0px;
+}
+#arrow {
+  fill: #c8c8c8;
+}
+#arrow:hover {
+  cursor: pointer;
+}
+#arrowShort {
+  fill: #c8c8c8;
+}
+#arrowShort:hover {
+  cursor: pointer;
+}
+text.dateString {
+  fill: #323232;
+}
+text.timeString {
+  fill: #323232;
 }

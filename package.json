@@ -20,7 +20,7 @@
     "express": "~4.13.4",
     "hbs": "~4.0.0",
     "line-chart": "git@github.com:tomrickard/line-chart.git#v0.3.2",
-    "datetime-picker": "git@github.com:tomrickard/datetime-picker.git#v0.0.3",
+    "datetime-picker": "git@github.com:tomrickard/datetime-picker.git#v0.0.4",
     "morgan": "~1.7.0",
     "mysql": "^2.11.1",
     "serve-favicon": "~2.3.0",

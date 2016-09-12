@@ -15,7 +15,7 @@
 	<script type="text/javascript">
 
 		$(document).ready(function () {
-			
+			'use strict'
 			var socket = io();
 			socket.on('connect', function () {
 				console.log('connected to server websocket')
@@ -53,7 +53,7 @@
 					.ratio(4,2)
 					.data([data])
 					.scaleX('time')
-					.xLabel('Time (s)')
+					.xLabel('Time')
 					.axisPadding({y:1})
 					.yLabel('Temperature (°C)')
 					.title('Temperature vs Time')
@@ -83,6 +83,22 @@
 
 				});
 			}
+
+			/*----------------------------------------------------------------------------------
+			* Toggle fixed data size checkbox
+			**---------------------------------------------------------------------------------*/
+
+			var fixedCheckbox = document.getElementById('fixedCheckbox');
+			var fixedTick = document.getElementById('fixedTick');
+			fixedCheckbox.addEventListener('click', function () {
+				if(fixed) {
+					fixed = false;
+					fixedTick.style.display = "none";
+				} else {
+					fixed = true;
+					fixedTick.style.display = "block";
+				}
+			});
 
 			/*----------------------------------------------------------------------------------
 			* Load default chart
@@ -143,20 +159,22 @@
 <body>
 	<div class="overflow-wrapper">
 		{{> nav}}
-	</div>
-
-	<div class="body-wrapper">
-
 		<div class="chart" id="staticChart">
 		</div>
 
 		<div id="dates">
-			<div id="startText">
-				Start
+			
+			<div id="startDateContainer">
+				<div class="title">Start</div>
+				<div id="startDate"></div>
 			</div>
-			<div id="startDate"></div>
+			<div id="fixedCheckboxContainer">
+				<div class="title">Fixed Data Size</div>
+				<div id="fixedCheckbox">
+					<img id="fixedTick" src="/images/tick.svg">
+				</div>
+			</div>
 		</div>
-
 	</div>
 </body>
 </html>
