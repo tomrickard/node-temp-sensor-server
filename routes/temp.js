@@ -6,7 +6,9 @@ var jsonParser = bodyParser.json();
 var urlEncoded = bodyParser.urlencoded({ extended: true });
 var tempModel = require('../models/temp-model');
 
-
+// Get all rows where the date is between datetimes
+// E.g. between 10 and 12 on a certain day
+// /datetime?start=2016-09-11T10:00:00.000Z&end=2016-09-11T12:00:00.000Z
 router.get('/datetime/?', function(req, res, next) {
 	if(req.query.start && req.query.end) {
 		tempModel.tempInBetween(req.query.start, req.query.end, function (err, rows) {
@@ -20,18 +22,10 @@ router.get('/datetime/?', function(req, res, next) {
 	
 });
 
-router.get('/above/:start/:end', function(req, res, next) {
+// router.get('/above/?', function(req, res, next) {
+// });
 
- 	res.json({});
-});
-
-router.get('/below/:start/:end', function(req, res, next) {
-
- 	res.json({});
-});
-
-// router.post('/', jsonParser, function (req, res, next) {
-// 	// 
+// router.get('/below/?', function(req, res, next) {
 // });
 
 module.exports = router;

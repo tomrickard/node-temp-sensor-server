@@ -120,7 +120,7 @@
 			// Default to get data from an hour ago till now
 			var start_date = new Date();
 			var end_date = new Date()
-			start_date.setHours(end_date.getHours()-10);
+			start_date.setHours(end_date.getHours()-1);
 
 			// Set data URL
 			var url = '/temp/datetime?start=' + start_date.toISOString() + '&end=' + end_date.toISOString();

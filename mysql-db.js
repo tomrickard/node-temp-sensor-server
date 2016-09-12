@@ -2,6 +2,7 @@ var mysql = require('mysql');
 
 var pool = null;
 
+// Create a connection pool
 exports.connect = function (done) {
 	pool  = mysql.createPool({
 	  connectionLimit : 10,
@@ -13,6 +14,7 @@ exports.connect = function (done) {
 	done();
 }
 
+// Get a connect from the pool
 exports.get = function () {
 	return pool;
 }

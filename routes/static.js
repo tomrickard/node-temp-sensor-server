@@ -1,8 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET home page. */
-
+// Returns the /static page
 router.get('/?', function(req, res, next) {
  	res.render('static', { title: 'Demo' , layout:false});
 });
