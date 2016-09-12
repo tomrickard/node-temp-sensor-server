@@ -63,11 +63,11 @@
 
 			function newChart(url) {
 				// Get data with Ajax call
-				$.getJSON(url, function (data) {
+				$.getJSON(url, function (new_data) {
 
 					// Convert date values in date objects
 					// Map value to x and y
-					var new_data = data.rows.map(function (value) {
+					data = new_data.rows.map(function (value) {
 						return {
 							x: new Date(value.date),
 							y: value.temperature
@@ -77,7 +77,7 @@
 					// Remove old chart
 					selection.selectAll('*').remove()
 					// Add chart with new data
-					makeChart(selection, new_data)
+					makeChart(selection, data)
 
 					default_chart_loaded = true;
 
@@ -95,6 +95,7 @@
 			// Select chart host element
 			var selection = d3.select("div.chart")
 			var linechart;
+			var data;
 
 			// Data is stored at GMT on server
 			// When conerted back to Date object using new Date() in browser it will be correct.
@@ -110,9 +111,8 @@
 			newChart(url);
 			
 			/*----------------------------------------------------------------------------------
-			* Update chart using datetime picker (only for start datetime)
+			* Update chart using datetime picker (only for start)
 			**---------------------------------------------------------------------------------*/
-			
 			
 			var start_selection = d3.select("#startDate");
 
